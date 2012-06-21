@@ -25,6 +25,8 @@ public class CalculadoraBean implements Serializable {
     private String valorSalida;
     private String Operador;
     private int resultado;
+    private boolean activo;
+    private String IGUAL;
 
     public CalculadoraBean() {
         listaCarter = new ArrayList<Carater>();
@@ -105,33 +107,113 @@ public class CalculadoraBean implements Serializable {
     public void MiEvento(ActionEvent evt) {
         String btnAction = evt.getComponent().getId().replaceFirst("_", "");
 
-
-        
-
         if (btnAction.equalsIgnoreCase("M")) {
             Operador = "MULTIPLICACION";
-            if(valorEntrada.equals(""))return;
+            if (valorEntrada.equals("")) {
+                return;
+            }
+            activo = true;
         } else if (btnAction.equalsIgnoreCase("D")) {
+            activo = true;
             Operador = "DIVISION";
-        }else if (btnAction.equalsIgnoreCase("R")) {
+        } else if (btnAction.equalsIgnoreCase("R")) {
+            activo = true;
             Operador = "RESTA";
-        }else if (btnAction.equalsIgnoreCase("S")) {
+        } else if (btnAction.equalsIgnoreCase("S")) {
+            activo = true;
             Operador = "SUMA";
+        } else if (btnAction.equalsIgnoreCase("IGUAL")) {
+            activo = true;
+            IGUAL = "IGUAL";
+        } else if (btnAction.equalsIgnoreCase("C")) {
+            activo = true;
+            Operador = "C";
         } else {
             valorEntrada += btnAction;
         }
 
 
-        if (Operador.equals("MULTIPLICACION")) {
-            if (resultado == 0) {resultado = 1;}
+        if (Operador.equals("MULTIPLICACION") && activo == true) {
+            if (resultado == 0) {
+                resultado = 1;
+            }
+            activo = false;
             resultado = resultado * Integer.parseInt(valorEntrada);
+            valorEntrada = "";
+            valorSalida = String.valueOf(resultado);
+
+        } else if (Operador.equals("DIVISION") && activo == true) {
+
+            if (resultado == 0) {
+                resultado = Integer.parseInt(valorEntrada);
+            } else {
+
+                resultado = resultado / Integer.parseInt(valorEntrada);
+            }
+            valorEntrada = "";
+            activo = false;
+            valorSalida = String.valueOf(resultado);
+        } else if (Operador.equals("RESTA") && activo == true) {
+            if (resultado == 0) {
+                resultado = Integer.parseInt(valorEntrada);
+            } else {
+                resultado = resultado - Integer.parseInt(valorEntrada);
+            }
+            valorEntrada = "";
+            activo = false;
+            valorSalida = String.valueOf(resultado);
+        } else if (Operador.equals("SUMA") && activo == true) {
+            resultado = resultado + Integer.parseInt(valorEntrada);
+            valorEntrada = "";
+            activo = false;
+            valorSalida = String.valueOf(resultado);
+
+        } else if (btnAction.equalsIgnoreCase("IGUAL")) {
+
+            if (Operador.equals("MULTIPLICACION")) {
+                if (resultado == 0) {
+                    resultado = 1;
+                }
+                resultado = resultado * Integer.parseInt(valorEntrada);
+                valorEntrada = "";
+                valorSalida = String.valueOf(resultado);
+                Operador = "";
+            } else if (Operador.equals("DIVISION")) {
+
+                if (resultado == 0) {
+                    resultado = Integer.parseInt(valorEntrada);
+                } else {
+
+                    resultado = resultado / Integer.parseInt(valorEntrada);
+                }
+                Operador = "";
+                valorEntrada = "";
+                valorSalida = String.valueOf(resultado);
+            } else if (Operador.equals("RESTA")) {
+                if (resultado == 0) {
+                    resultado = Integer.parseInt(valorEntrada);
+                } else {
+                    resultado = resultado - Integer.parseInt(valorEntrada);
+                }
+                valorEntrada = "";
+                Operador = "";
+                valorSalida = String.valueOf(resultado);
+            } else if (Operador.equals("SUMA")) {
+                resultado = resultado + Integer.parseInt(valorEntrada);
+                valorEntrada = "";
+
+                valorSalida = String.valueOf(resultado);
+            }
+
             valorEntrada = "";
             Operador = "";
             valorSalida = String.valueOf(resultado);
+        } else if (btnAction.equalsIgnoreCase("C")) {
+            Operador = "";
+            valorEntrada = "";
+            valorSalida = "";
+            resultado = 0;
 
-        } else if (Operador.equals("DIVISION")) {
-        }else if (Operador.equals("RESTA")) {
-        }else if (Operador.equals("SUMA")) {
         }
 
 
