@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+        <h:outputStylesheet library="css" name="estilo.css"/>
+    </h:head>
+    <h:body>
+        <center>
+            <h:panelGrid columns="1">
+                <h:form>
+                    <h:panelGrid columns="1" style="text-align:right;width:215px;background-color:beige;margin-left:5px;; height:70px;">
+                        <h:outputText id="numSalida" value="#{calcbean.valorSalida}" class="visual" />
+                        <h:outputText id="numEntrada" value="#{calcbean.valorEntrada}" class="visual" disabled="true"/>
+                    </h:panelGrid>
+
+                    <h:panelGrid columns="4">
+                        <c:forEach var="valor" items="#{calcbean.listaCarter}">
+                            <h:commandButton id="_#{valor.nom_carater}" value="#{valor.valor_carater}" actionListener="#{calcbean.MiEvento}">
+                                <f:ajax execute="@this" render="numEntrada numSalida"/>
+                            </h:commandButton>
+                        </c:forEach>
+                    </h:panelGrid>
+                </h:form>
+            </h:panelGrid>
+        </center>
+    </h:body>
+</html>
+
