@@ -106,7 +106,7 @@ public class CalculadoraBean implements Serializable {
         String btnAction = evt.getComponent().getId().replaceFirst("_", "");
 
 
-
+        
 
         if (btnAction.equalsIgnoreCase("M")) {
             Operador = "MULTIPLICACION";
